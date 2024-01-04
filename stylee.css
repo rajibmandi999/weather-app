@@ -83,8 +83,8 @@
     width:342px;
     height: 184px;
     box-sizing: border-box;
-    background-color: #1d0f3c;
-    /* background-image: url(img/reg1.png); */
+    /* background-color: #1d0f3c; */
+    background-image: url(img/reg1.png); 
     background-repeat: no-repeat;
     display: flex;
     flex-direction: column;
