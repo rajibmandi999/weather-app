@@ -47,9 +47,7 @@ async function checkWeather(city) {
     let obj = {
       cityName: data.name,
       weather: data.weather[0].description,
-      temp:data.main.temp,
-      temp_min: data.main.temp_min,
-      temp_max: data.main.temp_max,
+      temp: data.main.temp,
       feel: data.main.feels_like,
       humidity: data.main.humidity,
       pressure: data.main.pressure,
@@ -58,8 +56,6 @@ async function checkWeather(city) {
       sys_sunRise: data.sys.sunrise,
       sys_sunSet: data.sys.sunset,
       img_url: icon_url,
-      country:data.sys.country,
-      
     };
     weather_object_arr.push(obj);
     weather_object_arr.sort((a, b) => a["temp"] - b["temp"]);
@@ -81,12 +77,9 @@ function weatherDetails(Obj_arr) {
   Obj_arr.forEach((element) => {
 
     // console.log(weather_container);
-    const counrty=element.country;
-    const mintemp= Math.round(element.temp_min);
-    const maxtemp= Math.round(element.temp_max);
     const name = element.cityName;
     const weather = element.weather;
-    const main =  Math.round(element.temp);
+    const main = element.temp;
     const wind = element.wind;
     const clouds = element.clouds;
     const sys_sunRise = element.sys_sunRise;
@@ -109,18 +102,27 @@ function weatherDetails(Obj_arr) {
     let weather_div = document.createElement("div");
     weather_div.className = "weather-div";
     weather_div.innerHTML = `<div id="temp_deg">
-                                <div id="main_temp">${main} <span>&#176;</span>C</div>
+                                <div>${main} <span>&#176;</span>C</div>
                                 <div><img src=${img}></div>
                             </div>
                                 <div>
                                     <div id="extra-details">
                                       <div id="feels-like"> 
-                                        <div id="city_name"> H: ${mintemp} <span>&#176;</span> L: ${maxtemp} <span>&#176;</span></div> 
+                                        <div>${feel} <span>&#176;</span>C<sub> feels like</sub></div>
+                                        <div>${weather} <sub>weather</sub></div>
                                       </div>
-                                      
-                                      <div id="cloudiness"> <div id="country"> ${name.toUpperCase()}, ${counrty.toUpperCase()} </div> <div id="weather">${weather}</div> </div>
+                                      <div id="wind-detail"><div>${wind} m/s <sub>Wind speed</sub></div><div>${humidity}% <sub>Humidity</sub></div><div>${pressure} hPa <sub>Air Pressure</sub></div></div>
+                                      <div id="cloudiness">Cloudiness ${clouds}%</div>
                                     </div>
-                                    
+                                    <div id="city-name-container">
+                                        <div>
+                                        <p id="city-name-p">${name.toUpperCase()}</p>
+                                        </div>
+                                        <div id="sun">
+                                          <p><span class=material-icons id="sunrise_icon">wb_sunny</span><span>${sunRise_time}</span></p>
+                                          <p><span class=material-icons id="sunset_icon">wb_twilight</span><span>${sunSet_time}</span></p>
+                                        </div>
+                                    </div>
                                 </div>
                             `;
 
@@ -128,18 +130,3 @@ function weatherDetails(Obj_arr) {
     weather_container.appendChild(weather_div);
   });
 }
-
-// -------------------my TimeRangesle----------
-
-// const KEY = "cffb3b881333c8b77984d9f95a766025";
-
-// async function myfun(){
-//   let result = await fetch(
-//     `https://api.openweathermap.org/data/2.5/weather?q=Delhi&appid=${KEY}&units=metric`
-//   );
-//   let data = await result.json();
-
-//   console.log(data);
-
-// }
-// myfun();
